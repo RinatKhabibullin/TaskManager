@@ -6,7 +6,7 @@ FactoryBot.define do
     "email#{n}@example.com"
   end
   sequence :type do |n|
-    "type#{
+    "#{
       if n % 3 == 0
         "Developer"
       elsif n % 3 == 1
@@ -20,7 +20,7 @@ FactoryBot.define do
     "image#{n}"
   end
   sequence :state do |n|
-    "state#{
+    "#{
       if n % 7 == 0
         "new_task"
       elsif n % 7 == 1

@@ -1,9 +1,9 @@
 FactoryBot.define do
-  sequence :string, aliases: [:first_name, :last_name, :password, :name, :description] do |n|
+  sequence :string do |n|
     "string#{n}"
   end
   sequence :email do |n|
-    "email#{n}@example.com"
+    "email#{n}@factory.com"
   end
   sequence :avatar do |n|
     "image#{n}"

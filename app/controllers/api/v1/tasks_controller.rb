@@ -10,5 +10,11 @@ class Api::V1::TasksController < Api::ApplicationController
   end
 
   def show
+    task = Task.find(params[:id])
+ 
+    respond_with(task, serializer: TaskSerializer)
+  end
+
+  def show
   end
 end

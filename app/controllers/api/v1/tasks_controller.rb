@@ -1,4 +1,6 @@
-class Api::V1::TasksController < Api::ApplicationController
+class Api::V1::TasksController < Api::V1::ApplicationController
+  respond_to :json
+
   def index
     tasks = Task.all
                 .ransack(ransack_params)
@@ -27,6 +29,13 @@ class Api::V1::TasksController < Api::ApplicationController
     task.update(task_params)
   
     respond_with(task, serializer: TaskSerializer)
+  end
+
+  def destroy
+    task = Task.find(params[:id])
+    task.destroy
+  
+    respond_with(task)
   end
   
   private

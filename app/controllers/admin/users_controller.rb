@@ -5,7 +5,6 @@ class Admin::UsersController < Admin::ApplicationController
 
   def index
     @q = User.ransack(params[:q])
-    @t = Task.all.map { |el| el.id }
     @users = @q.result.order(:type).order(:id).page(params[:page]).per(10)
   end
 

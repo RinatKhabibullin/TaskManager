@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    namespace :v1 do
-      get 'tasks/show'
-    end
-  end
   root :to => "web/boards#show"
 
   scope module: :web do

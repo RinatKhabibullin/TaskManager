@@ -24,6 +24,6 @@ FactoryBot.define do
     "image#{n}"
   end
   sequence :expired_at do |n|
-    n.days.ago
+    n.days.ago.to_date
   end
 end

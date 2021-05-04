@@ -76,7 +76,7 @@ const TaskBoard = () => {
   };
 
   const generateBoard = () => {
-    const board = {
+    const generatedBoard = {
       columns: STATES.map(({ key, value }) => ({
         id: key,
         title: value,
@@ -85,7 +85,7 @@ const TaskBoard = () => {
       })),
     };
 
-    setBoard(board);
+    setBoard(generatedBoard);
   };
 
   const loadBoard = () => {

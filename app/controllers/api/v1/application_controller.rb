@@ -12,6 +12,7 @@ class Api::V1::ApplicationController < Api::ApplicationController
   end
 
   def ransack_params
+    params[:q][:s] = RANSACK_DEFAULT_SORT
     params[:q]
   end
 

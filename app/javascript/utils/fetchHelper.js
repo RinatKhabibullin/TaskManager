@@ -19,6 +19,7 @@ function headers() {
 
 axios.defaults.headers.post = headers();
 axios.defaults.headers.put = headers();
+axios.defaults.headers.get = headers();
 axios.defaults.headers.delete = headers();
 axios.interceptors.response.use(null, (error) => {
   if (error.response.status === 422) {
@@ -41,7 +42,6 @@ export default {
       .get(url, {
         params: decamelize(params),
         paramsSerializer: (parameters) => qs.stringify(parameters, { encode: false }),
-        headers: headers(),
       })
       .then(camelize);
   },

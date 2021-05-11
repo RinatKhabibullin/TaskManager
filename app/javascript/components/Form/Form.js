@@ -5,6 +5,8 @@ import { has } from 'ramda';
 import TextField from '@material-ui/core/TextField';
 import UserSelect from 'components/UserSelect';
 
+import TaskPresenter from 'presenters/TaskPresenter';
+
 import useStyles from './useStyles';
 
 const MODES = {
@@ -25,7 +27,7 @@ const Form = ({ errors, onChange, task, mode }) => {
         error={has('name', errors)}
         helperText={errors.name}
         onChange={handleChangeTextField('name')}
-        value={task.name}
+        value={TaskPresenter.name(task)}
         label="Name"
         required
         margin="dense"
@@ -34,7 +36,7 @@ const Form = ({ errors, onChange, task, mode }) => {
         error={has('description', errors)}
         helperText={errors.description}
         onChange={handleChangeTextField('description')}
-        value={task.description}
+        value={TaskPresenter.description(task)}
         label="Description"
         required
         multiline

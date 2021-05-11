@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'ramda';
 
-import Form from 'components/Form';
-
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card';
@@ -13,6 +11,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import Form from 'components/Form';
+
+import TaskPresenter from 'presenters/TaskPresenter';
 
 import useStyles from './useStyles';
 
@@ -59,7 +61,7 @@ const EditPopup = ({ cardId, onClose, onCardDestroy, onLoadCard, onCardUpdate, m
               <CloseIcon />
             </IconButton>
           }
-          title={isLoading ? 'Your task is loading. Please be patient.' : `Task # ${task.id} [${task.name}]`}
+          title={isLoading ? 'Your task is loading. Please be patient.' : `Task # ${TaskPresenter.taskIdAndName(task)}`}
         />
         <CardContent>
           {isLoading ? (

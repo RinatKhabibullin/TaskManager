@@ -45,7 +45,7 @@ const Form = ({ errors, onChange, task, mode }) => {
       {mode === MODES.EDIT && (
         <UserSelect
           label="Author"
-          value={task.author}
+          value={TaskPresenter.author(task)}
           onChange={handleChangeSelect('author')}
           isRequired
           isDisabled
@@ -55,7 +55,7 @@ const Form = ({ errors, onChange, task, mode }) => {
       )}
       <UserSelect
         label="Assignee"
-        value={task.assignee}
+        value={TaskPresenter.assignee(task)}
         onChange={handleChangeSelect('assignee')}
         isRequired
         error={has('assignee', errors)}

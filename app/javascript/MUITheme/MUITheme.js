@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { blue } from '@material-ui/core/colors/blue';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({

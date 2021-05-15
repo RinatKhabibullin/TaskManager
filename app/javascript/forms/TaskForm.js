@@ -9,7 +9,7 @@ export default {
     };
   },
 
-  attributesToSubmit(task) {
+  seialize(task) {
     const pertmittedKeys = ['id', 'name', 'description'];
 
     return {

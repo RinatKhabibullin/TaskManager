@@ -23,20 +23,18 @@ const MODES = {
 };
 
 const TaskBoard = () => {
-  const { board, loadBoard, loadColumn, loadColumnMore } = useTasks();
+  const { board, loadBoard, loadColumn, loadColumnMore, queryParamsCreate } = useTasks();
   const [mode, setMode] = useState(MODES.NONE);
   const [openedTaskId, setOpenedTaskId] = useState(null);
   const styles = useStyles();
 
-  useEffect(() => {
-    loadBoard();
-  }, []);
+  useEffect(loadBoard, []);
 
-  const handleOpenAddPopup = () => {
+  const handleAddPopupOpen = () => {
     setMode(MODES.ADD);
   };
 
-  const handleOpenEditPopup = (task) => {
+  const handleEditPopupOpen = (task) => {
     setOpenedTaskId(task.id);
     setMode(MODES.EDIT);
   };
@@ -49,13 +47,13 @@ const TaskBoard = () => {
   const handleCardDragEnd = (task, source, destination) => {
     const transition = task.transitions.find(({ to }) => destination.toColumnId === to);
     if (!transition) {
-      return null;
+      return;
     }
-
+    // eslint-disable-next-line consistent-return
     return TasksRepository.update(TaskPresenter.id(task), { stateEvent: transition.event })
       .then(() => {
-        loadColumn(destination.toColumnId);
-        loadColumn(source.fromColumnId);
+        loadColumn(queryParamsCreate(destination.toColumnId));
+        loadColumn(queryParamsCreate(source.fromColumnId));
       })
       .catch((error) => {
         alert(`Move failed! ${error.message}`);
@@ -63,9 +61,9 @@ const TaskBoard = () => {
   };
 
   const handleTaskCreate = (params) => {
-    const attributes = TaskForm.attributesToSubmit(params);
+    const attributes = TaskForm.seialize(params);
     return TasksRepository.create(attributes).then(({ data: { task } }) => {
-      loadColumn(TaskPresenter.state(task));
+      loadColumn(queryParamsCreate(TaskPresenter.state(task)));
       setMode(MODES.NONE);
     });
   };
@@ -73,31 +71,31 @@ const TaskBoard = () => {
   const handleTaskLoad = (id) => TasksRepository.show(id).then(({ data: { task } }) => task);
 
   const handleTaskUpdate = (task) => {
-    const attributes = TaskForm.attributesToSubmit(task);
+    const attributes = TaskForm.seialize(task);
 
     return TasksRepository.update(TaskPresenter.id(task), attributes).then(() => {
-      loadColumn(TaskPresenter.state(task));
+      loadColumn(queryParamsCreate(TaskPresenter.state(task)));
       handleClose();
     });
   };
 
   const handleTaskDestroy = (task) => {
     TasksRepository.destroy(TaskPresenter.id(task)).then(() => {
-      loadColumn(TaskPresenter.state(task));
+      loadColumn(queryParamsCreate(TaskPresenter.state(task)));
       handleClose();
     });
   };
 
   return (
     <>
-      <Fab onClick={handleOpenAddPopup} className={styles.addButton} color="primary" aria-label="add">
+      <Fab onClick={handleAddPopupOpen} className={styles.addButton} color="primary" aria-label="add">
         <AddIcon />
       </Fab>
 
       <KanbanBoard
         disableColumnDrag
         onCardDragEnd={handleCardDragEnd}
-        renderCard={(card) => <Task onClick={handleOpenEditPopup} task={card} />}
+        renderCard={(card) => <Task onClick={handleEditPopupOpen} task={card} />}
         renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
       >
         {board}

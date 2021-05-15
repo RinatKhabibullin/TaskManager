@@ -52,23 +52,17 @@ export default tasksSlice.reducer;
 export const useTasksActions = () => {
   const dispatch = useDispatch();
 
-  const loadColumn = (state, page = 1, perPage = 10) => {
-    TasksRepository.index({
-      q: { stateEq: state },
-      page,
-      perPage,
-    }).then(({ data }) => {
-      dispatch(loadColumnSuccess({ ...data, columnId: state }));
+  const loadColumn = (params) => {
+    TasksRepository.index(params).then(({ data }) => {
+      const { stateEq } = params.q;
+      dispatch(loadColumnSuccess({ ...data, columnId: stateEq }));
     });
   };
 
-  const loadColumnMore = (state, page = 1, perPage = 10) => {
-    TasksRepository.index({
-      q: { stateEq: state },
-      page,
-      perPage,
-    }).then(({ data }) => {
-      dispatch(loadColumnMoreSuccess({ ...data, columnId: state }));
+  const loadColumnMore = (params) => {
+    TasksRepository.index(params).then(({ data }) => {
+      const { stateEq } = params.q;
+      dispatch(loadColumnMoreSuccess({ ...data, columnId: stateEq }));
     });
   };
 

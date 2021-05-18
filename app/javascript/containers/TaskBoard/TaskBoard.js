@@ -13,6 +13,8 @@ import TaskPresenter from 'presenters/TaskPresenter';
 import TaskForm from 'forms/TaskForm';
 
 import useTasks from 'hooks/store/useTasks';
+import { useTasksActions } from 'slices/TasksSlice';
+import { STATES } from 'presenters/TaskPresenter';
 
 import useStyles from './useStyles';
 
@@ -23,12 +25,23 @@ const MODES = {
 };
 
 const TaskBoard = () => {
-  const { board, loadBoard, loadColumn, loadColumnMore, queryParamsCreate } = useTasks();
+  const { board, loadBoard } = useTasks();
   const [mode, setMode] = useState(MODES.NONE);
   const [openedTaskId, setOpenedTaskId] = useState(null);
   const styles = useStyles();
+  const { loadColumn, loadColumnMore } = useTasksActions();
 
-  useEffect(loadBoard, []);
+  const taskLoadParams = (stateEq, page = 1, perPage = 10) => ({
+    q: { stateEq },
+    page,
+    perPage,
+  });
+
+  const boardLoadParams = STATES.map(({ taskState }) => taskLoadParams(taskState));
+
+  useEffect(() => {
+    loadBoard(boardLoadParams);
+  }, []);
 
   const handleAddPopupOpen = () => {
     setMode(MODES.ADD);
@@ -52,8 +65,8 @@ const TaskBoard = () => {
     // eslint-disable-next-line consistent-return
     return TasksRepository.update(TaskPresenter.id(task), { stateEvent: transition.event })
       .then(() => {
-        loadColumn(queryParamsCreate(destination.toColumnId));
-        loadColumn(queryParamsCreate(source.fromColumnId));
+        loadColumn(taskLoadParams(destination.toColumnId));
+        loadColumn(taskLoadParams(source.fromColumnId));
       })
       .catch((error) => {
         alert(`Move failed! ${error.message}`);
@@ -61,9 +74,9 @@ const TaskBoard = () => {
   };
 
   const handleTaskCreate = (params) => {
-    const attributes = TaskForm.seialize(params);
+    const attributes = TaskForm.serialize(params);
     return TasksRepository.create(attributes).then(({ data: { task } }) => {
-      loadColumn(queryParamsCreate(TaskPresenter.state(task)));
+      loadColumn(taskLoadParams(TaskPresenter.state(task)));
       setMode(MODES.NONE);
     });
   };
@@ -71,17 +84,17 @@ const TaskBoard = () => {
   const handleTaskLoad = (id) => TasksRepository.show(id).then(({ data: { task } }) => task);
 
   const handleTaskUpdate = (task) => {
-    const attributes = TaskForm.seialize(task);
+    const attributes = TaskForm.serialize(task);
 
     return TasksRepository.update(TaskPresenter.id(task), attributes).then(() => {
-      loadColumn(queryParamsCreate(TaskPresenter.state(task)));
+      loadColumn(taskLoadParams(TaskPresenter.state(task)));
       handleClose();
     });
   };
 
   const handleTaskDestroy = (task) => {
     TasksRepository.destroy(TaskPresenter.id(task)).then(() => {
-      loadColumn(queryParamsCreate(TaskPresenter.state(task)));
+      loadColumn(taskLoadParams(TaskPresenter.state(task)));
       handleClose();
     });
   };

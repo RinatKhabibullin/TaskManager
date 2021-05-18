@@ -8,7 +8,7 @@ import { changeColumn } from '@lourenci/react-kanban';
 const initialState = {
   board: {
     columns: STATES.map((column) => ({
-      id: column.key,
+      id: column.taskState,
       title: column.value,
       cards: [],
       meta: {},
@@ -66,11 +66,8 @@ export const useTasksActions = () => {
     });
   };
 
-  const loadBoard = () => STATES.map(({ key }) => loadColumn(key));
-
   return {
     loadColumn,
-    loadBoard,
     loadColumnMore,
   };
 };

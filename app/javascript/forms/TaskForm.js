@@ -9,7 +9,7 @@ export default {
     };
   },
 
-  seialize(task) {
+  serialize(task) {
     const pertmittedKeys = ['id', 'name', 'description'];
 
     return {

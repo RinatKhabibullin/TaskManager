@@ -1,6 +1,11 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
+require 'coveralls'
+require 'simplecov'
+
+SimpleCov.start
+Coveralls.wear!
 
 class ActiveSupport::TestCase
   include AuthHelper

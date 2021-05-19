@@ -4,7 +4,9 @@ require 'rails/test_help'
 require 'coveralls'
 require 'simplecov'
 
-SimpleCov.start
+SimpleCov.start 'rails' do
+  formatter SimpleCov::Formatter::SimpleFormatter
+end
 Coveralls.wear!
 
 class ActiveSupport::TestCase

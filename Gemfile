@@ -36,8 +36,9 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'responders'
 gem 'active_model_serializers'
 gem 'js-routes'
-gem 'simplecov', '~> 0.17.0'
+gem 'simplecov', '~> 0.18.0'
 gem 'coveralls', require: false
+gem 'coveralls_reborn', '~> 0.22.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,13 +1,12 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
-require 'coveralls'
-
 require 'simplecov'
+require 'coveralls'
 
 SimpleCov.start 'rails' do
   if ENV['CI']
-    formatter SimpleCov::Formatter::SimpleFormatter
+    formatter Coveralls::SimpleCov::Formatter
   else
     formatter SimpleCov::Formatter::MultiFormatter.new([
       SimpleCov::Formatter::SimpleFormatter,
@@ -15,6 +14,8 @@ SimpleCov.start 'rails' do
     ])
   end
 end
+
+Rails.application.eager_load!
 
 class ActiveSupport::TestCase
   include AuthHelper

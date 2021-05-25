@@ -36,7 +36,7 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'responders'
 gem 'active_model_serializers'
 gem 'js-routes'
-gem 'simplecov', require: false, group: :test
+gem 'simplecov', '~> 0.17.0'
 gem 'coveralls', require: false
 
 group :development, :test do

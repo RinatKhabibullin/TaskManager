@@ -5,7 +5,9 @@ require 'simplecov'
 require 'coveralls'
 
 SimpleCov.start 'rails' do
-  formatter Coveralls::SimpleCov::Formatter
+  if ENV['CI']
+    formatter Coveralls::SimpleCov::Formatter
+  end
 end
 
 Rails.application.eager_load!

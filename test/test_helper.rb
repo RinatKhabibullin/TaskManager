@@ -6,12 +6,7 @@ require 'coveralls'
 
 SimpleCov.start 'rails' do
   if ENV['CI']
-    formatter SimpleCov::Formatter::SimpleFormatter
-  else
-    formatter SimpleCov::Formatter::MultiFormatter.new([
-      SimpleCov::Formatter::SimpleFormatter,
-      SimpleCov::Formatter::HTMLFormatter
-    ])
+    formatter Coveralls::SimpleCov::Formatter
   end
 end
 

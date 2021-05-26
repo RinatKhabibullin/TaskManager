@@ -36,9 +36,6 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'responders'
 gem 'active_model_serializers'
 gem 'js-routes'
-gem 'simplecov', '~> 0.18.0'
-gem 'coveralls', require: false
-gem 'coveralls_reborn', '~> 0.22.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -62,6 +59,8 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'simplecov', '~> 0.18.0'
+  gem 'coveralls_reborn', '~> 0.22.0', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

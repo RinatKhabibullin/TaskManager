@@ -2,4 +2,4 @@
 
 <a href='https://coveralls.io/github/RinatKhabibullin/task-manager?branch=HEAD'><img src='https://coveralls.io/repos/github/RinatKhabibullin/task-manager/badge.svg?branch=HEAD' alt='Coverage Status' /></a>
 
-https://task-manager-rinat.herokuapp.com/session/new
+https://task-manager-rinat.herokuapp.com

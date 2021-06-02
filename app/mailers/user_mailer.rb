@@ -7,4 +7,11 @@ class UserMailer < ApplicationMailer
 
     mail(to: user.email)
   end
+
+  def task_updated    
+    @task = params[:task]
+    user = @task.author
+
+    mail(to: user.email)
+  end
 end

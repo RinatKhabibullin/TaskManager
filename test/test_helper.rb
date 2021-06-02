@@ -13,6 +13,7 @@ end
 Rails.application.eager_load!
 
 class ActiveSupport::TestCase
+  include ActionMailer::TestHelper
   include AuthHelper
   include FactoryBot::Syntax::Methods
 end

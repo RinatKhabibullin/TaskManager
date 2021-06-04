@@ -37,6 +37,7 @@ gem 'responders'
 gem 'active_model_serializers'
 gem 'js-routes'
 gem 'newrelic_rpm'
+gem 'rollbar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -52,6 +53,7 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
+  gem 'bullet'
 end
 
 group :test do

@@ -36,6 +36,7 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'responders'
 gem 'active_model_serializers'
 gem 'js-routes'
+gem 'newrelic_rpm'
 gem 'rollbar'
 
 group :development, :test do

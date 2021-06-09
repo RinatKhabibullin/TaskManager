@@ -4,8 +4,8 @@ require 'rails/test_help'
 require 'simplecov'
 require 'coveralls'
 
-SimpleCov.start 'rails' do
-  if ENV['CI']
+if ENV['CI']
+  SimpleCov.start 'rails' do
     formatter Coveralls::SimpleCov::Formatter
   end
 end

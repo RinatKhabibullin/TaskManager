@@ -36,6 +36,8 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'responders'
 gem 'active_model_serializers'
 gem 'js-routes'
+gem 'newrelic_rpm'
+gem 'rollbar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -53,6 +55,7 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'letter_opener'
   gem 'letter_opener_web'
+  gem 'bullet'
 end
 
 group :test do

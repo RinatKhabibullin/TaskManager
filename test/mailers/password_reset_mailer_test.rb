@@ -9,7 +9,7 @@ class PasswordResetMailerTest < ActionMailer::TestCase
     email = PasswordResetMailer.with(params).password_reset_created
 
     assert_emails 1 do
-      email.deliver_now
+      email.deliver_later
     end
 
     assert_equal ['from@example.com'], email.from

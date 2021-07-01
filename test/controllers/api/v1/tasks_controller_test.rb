@@ -46,11 +46,8 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
       merge({ author_id: author.id, assignee_id: assignee.id }).
       stringify_keys
 
-    patch :update, params: { id: task.id, format: :json, task: task_attributes }
-    assert_response :success
-
     assert_emails 1 do
-      post :update, params: { id: task.id, format: :json, task: task_attributes }
+      patch :update, params: { id: task.id, format: :json, task: task_attributes }
     end
     assert_response :success
 

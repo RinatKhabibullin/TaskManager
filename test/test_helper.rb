@@ -3,6 +3,9 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'simplecov'
 require 'coveralls'
+require 'sidekiq/testing'
+
+Sidekiq::Testing.inline!
 
 if ENV['CI']
   SimpleCov.start 'rails' do

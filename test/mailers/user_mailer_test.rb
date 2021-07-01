@@ -8,7 +8,7 @@ class UserMailerTest < ActionMailer::TestCase
     email = UserMailer.with(params).task_created
 
     assert_emails 1 do
-      email.deliver_later
+      SendTaskCreateNotificationJob.perform_async(task.id)
     end
 
     assert_equal ['noreply@taskmanager.com'], email.from

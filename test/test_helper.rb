@@ -5,6 +5,8 @@ require 'simplecov'
 require 'coveralls'
 require 'sidekiq/testing'
 
+Sidekiq::Testing.inline!
+
 if ENV['CI']
   SimpleCov.start 'rails' do
     formatter Coveralls::SimpleCov::Formatter

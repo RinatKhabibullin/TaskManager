@@ -94,7 +94,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     assert_response :success
   
     task.reload
-    assert { task.image.attached? }
+    assert task.image.attached?
   end
   
   test 'should put remove_image' do
@@ -102,14 +102,21 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     task = create :task, author: author
   
     image = file_fixture('image.jpg')
-    attachable_image = fixture_file_upload(image)
+    
+    attachment_params = {
+      image: fixture_file_upload(image, 'image/jpeg'),
+      crop_x: 190,
+      crop_y: 100,
+      crop_width: 300,
+      crop_height: 300,
+    }
   
-    task.image.attach(attachable_image)
+    put :attach_image, params: { id: task.id, attachment: attachment_params, format: :json }
   
     put :remove_image, params: { id: task.id, format: :json }
     assert_response :success
   
     task.reload
-    refute { task.image.attached? }
+    refute task.image.attached?
   end
 end

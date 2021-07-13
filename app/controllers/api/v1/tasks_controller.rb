@@ -1,13 +1,13 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
   def index
-    tasks = Task
-      .includes([:author, :assignee])
-      .all
-      .ransack(ransack_params)
-      .result
-      .page(page)
-      .per(per_page)
-      .with_attached_image
+    tasks = Task.
+      includes([:author, :assignee]).
+      all.
+      ransack(ransack_params).
+      result.
+      page(page).
+      per(per_page).
+      with_attached_image
 
     respond_with(tasks, each_serializer: TaskSerializer, root: 'items', meta: build_meta(tasks))
   end
@@ -40,7 +40,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
 
   def destroy
     task = Task.find(params[:id])
-    
+
     if task.destroy
       SendTaskDestroyNotificationJob.perform_async(params[:id], task.author_id)
     end
@@ -51,22 +51,22 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   def attach_image
     task = Task.find(params[:id])
     task_attach_image_form = TaskAttachImageForm.new(attachment_params)
-  
+
     if task_attach_image_form.invalid?
-      respond_with task_attach_image_form
+      respond_with(task_attach_image_form)
       return
     end
-  
+
     image = task_attach_image_form.processed_image
     task.image.attach(image)
-  
+
     respond_with(task, serializer: TaskSerializer)
   end
-  
+
   def remove_image
     task = Task.find(params[:id])
     task.image.purge
-  
+
     respond_with(task, serializer: TaskSerializer)
   end
 

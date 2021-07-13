@@ -8,7 +8,7 @@ require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 
 if ENV['CI']
-  SimpleCov.start 'rails' do
+  SimpleCov.start('rails') do
     formatter Coveralls::SimpleCov::Formatter
   end
 end

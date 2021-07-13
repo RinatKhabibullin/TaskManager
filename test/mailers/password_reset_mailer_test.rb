@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class PasswordResetMailerTest < ActionMailer::TestCase
-  test "password reset created" do
+  test 'password reset created' do
     user = create(:user)
     user.generate_password_reset_token!
     token = user.password_reset_token

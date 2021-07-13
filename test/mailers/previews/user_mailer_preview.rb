@@ -6,7 +6,7 @@ class UserMailerPreview < ActionMailer::Preview
 
     UserMailer.with(params).task_created
   end
-  
+
   def task_updated
     task = Task.first
     params = { task: task }

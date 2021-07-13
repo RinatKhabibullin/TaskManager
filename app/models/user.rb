@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :password_reset_token
+
   has_secure_password
   has_many :my_tasks, class_name: 'Task', foreign_key: :author_id
   has_many :assigned_tasks, class_name: 'Task', foreign_key: :assignee_id
@@ -20,8 +21,8 @@ class User < ApplicationRecord
   end
 
   def generate_password_reset_token!
-    self.password_reset_token = self.new_token
-    update(reset_password_token_hash: self.new_hash(password_reset_token), token_generate_time: Time.zone.now)
+    self.password_reset_token = new_token
+    update(reset_password_token_hash: new_hash(password_reset_token), token_generate_time: Time.zone.now)
   end
 
   def remove_password_reset_token!
@@ -33,6 +34,6 @@ class User < ApplicationRecord
   end
 
   def token_validation?(token)
-    BCrypt::Password.new(self.reset_password_token_hash) == token
+    BCrypt::Password.new(reset_password_token_hash) == token
   end
 end

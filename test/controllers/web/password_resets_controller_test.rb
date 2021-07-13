@@ -1,12 +1,12 @@
-require "test_helper"
+require 'test_helper'
 
 class Web::PasswordResetsControllerTest < ActionController::TestCase
-  test "should get new" do
+  test 'should get new' do
     get :new
     assert_response :success
   end
 
-  test "should post create" do
+  test 'should post create' do
     user = create(:user)
 
     assert_emails 1 do
@@ -16,7 +16,7 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     user = create(:user)
     user.generate_password_reset_token!
 
@@ -24,7 +24,7 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get update" do
+  test 'should get update' do
     user = create(:user)
     user.generate_password_reset_token!
 

@@ -8,7 +8,7 @@ class Web::PasswordResetsController < Web::ApplicationController
 
     if @password_reset.valid?
       user = @password_reset.user
-      user.generate_password_reset_token!      
+      user.generate_password_reset_token!
       token = user.password_reset_token
       SendPasswordResetCreateNotificationJob.perform_async(user.id, token)
     else
@@ -20,10 +20,10 @@ class Web::PasswordResetsController < Web::ApplicationController
     @user = User.find_by(email: params[:email])
     if !@user.password_reset_token_active?
       @user.remove_password_reset_token!
-      render file: "#{Rails.root}/public/404.html" , status: :not_found
-    end    
+      render(file: "#{Rails.root}/public/404.html", status: :not_found)
+    end
     if !@user.token_validation?(params[:id])
-      render file: "#{Rails.root}/public/404.html" , status: :not_found
+      render(file: "#{Rails.root}/public/404.html", status: :not_found)
     end
   end
 

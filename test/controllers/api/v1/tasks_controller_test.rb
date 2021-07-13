@@ -3,14 +3,14 @@ require 'test_helper'
 class Api::V1::TasksControllerTest < ActionController::TestCase
   def after_teardown
     super
-  
+
     remove_uploaded_files
   end
-  
+
   def remove_uploaded_files
     FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
-  
+
   test 'should get show' do
     author = create(:user)
     task = create(:task, author: author)
@@ -30,7 +30,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
     assignee = create(:user)
     task_attributes = attributes_for(:task).
       merge({ assignee_id: assignee.id })
-    
+
     post :create, params: { task: task_attributes, format: :json }
     assert_response :created
 
@@ -38,10 +38,10 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
       post :create, params: { task: task_attributes, format: :json }
     end
     assert_response :created
-  
+
     data = JSON.parse(response.body)
     created_task = Task.find(data['task']['id'])
-  
+
     assert created_task.present?
     assert created_task.assignee == assignee
     assert created_task.author == author
@@ -78,9 +78,9 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
   end
 
   test 'should put attach_image' do
-    author = create :user
-    task = create :task, author: author
-  
+    author = create(:user)
+    task = create(:task, author: author)
+
     image = file_fixture('image.jpg')
     attachment_params = {
       image: fixture_file_upload(image, 'image/jpeg'),
@@ -89,20 +89,20 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
       crop_width: 300,
       crop_height: 300,
     }
-  
+
     put :attach_image, params: { id: task.id, attachment: attachment_params, format: :json }
     assert_response :success
-  
+
     task.reload
     assert task.image.attached?
   end
-  
+
   test 'should put remove_image' do
-    author = create :user
-    task = create :task, author: author
-  
+    author = create(:user)
+    task = create(:task, author: author)
+
     image = file_fixture('image.jpg')
-    
+
     attachment_params = {
       image: fixture_file_upload(image, 'image/jpeg'),
       crop_x: 190,
@@ -110,12 +110,12 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
       crop_width: 300,
       crop_height: 300,
     }
-  
+
     put :attach_image, params: { id: task.id, attachment: attachment_params, format: :json }
-  
+
     put :remove_image, params: { id: task.id, format: :json }
     assert_response :success
-  
+
     task.reload
     refute task.image.attached?
   end

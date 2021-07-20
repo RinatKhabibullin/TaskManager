@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { has } from 'ramda';
+import { has, isNil } from 'ramda';
 
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 import UserSelect from 'components/UserSelect';
+import ImageUpload from 'components/ImageUpload';
 
 import TaskPresenter from 'presenters/TaskPresenter';
 
@@ -14,7 +17,7 @@ const MODES = {
   EDIT: 'edit',
 };
 
-const Form = ({ errors, onChange, task, mode }) => {
+const Form = ({ errors, onChange, task, onAttachImage, onRemoveImage, mode }) => {
   const handleChangeTextField = ({ target: { name, value } }) => onChange({ ...task, [name]: value });
 
   const handleChangeSelect = (fieldName) => (user) => onChange({ ...task, [fieldName]: user });
@@ -63,6 +66,19 @@ const Form = ({ errors, onChange, task, mode }) => {
         error={has('assignee', errors)}
         helperText={errors.assignee}
       />
+      {mode === MODES.EDIT &&
+        (isNil(TaskPresenter.imageUrl(task)) ? (
+          <div className={styles.imageUploadContainer}>
+            <ImageUpload onUpload={onAttachImage} />
+          </div>
+        ) : (
+          <div className={styles.previewContainer}>
+            <img className={styles.preview} src={TaskPresenter.imageUrl(task)} alt="Attachment" />
+            <Button variant="contained" size="small" color="primary" onClick={onRemoveImage}>
+              Remove image
+            </Button>
+          </div>
+        ))}
     </form>
   );
 };
@@ -77,10 +93,14 @@ Form.propTypes = {
     assignee: PropTypes.arrayOf(PropTypes.string),
   }),
   mode: PropTypes.string.isRequired,
+  onAttachImage: PropTypes.func,
+  onRemoveImage: PropTypes.func,
 };
 
 Form.defaultProps = {
   errors: {},
+  onAttachImage: () => {},
+  onRemoveImage: () => {},
 };
 
 export default Form;

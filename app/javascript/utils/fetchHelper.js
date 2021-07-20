@@ -64,8 +64,11 @@ export default {
     return axios.delete(url).then(camelize);
   },
 
-  putFormData(url, json) {
-    const body = decamelize(json);
+  putFormData(url, params, image) {
+    console.log(image);
+    console.log(params);
+    const body = { attachment: { ...decamelize(params), image } };
+    console.log(body);
     const formData = serialize(body);
 
     return axios

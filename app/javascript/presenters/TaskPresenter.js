@@ -19,6 +19,7 @@ export default new PropTypesPresenter(
     author: PropTypes.shape(),
     assignee: PropTypes.shape(),
     state: PropTypes.string,
+    imageUrl: PropTypes.string,
   },
   {
     title(task) {

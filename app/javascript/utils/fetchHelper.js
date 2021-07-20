@@ -3,6 +3,8 @@ import qs from 'qs';
 
 import { camelize, decamelize } from './keysConverter';
 
+import { serialize } from 'object-to-formdata';
+
 function authenticityToken() {
   const token = document.querySelector('meta[name="csrf-token"]');
   return token ? token.content : null;
@@ -60,5 +62,21 @@ export default {
 
   delete(url) {
     return axios.delete(url).then(camelize);
+  },
+
+  putFormData(url, params, image) {
+    console.log(image);
+    console.log(params);
+    const body = { attachment: { ...decamelize(params), image } };
+    console.log(body);
+    const formData = serialize(body);
+
+    return axios
+      .put(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(camelize);
   },
 };

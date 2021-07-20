@@ -99,6 +99,10 @@ const TaskBoard = () => {
     });
   };
 
+  const handleAttachImage = (taskId, params, image) => TasksRepository.attachImage(taskId, params, image);
+
+  const handleRemoveImage = (taskId) => TasksRepository.removeImage(taskId);
+
   return (
     <>
       <Fab onClick={handleAddPopupOpen} className={styles.addButton} color="primary" aria-label="add">
@@ -121,6 +125,8 @@ const TaskBoard = () => {
           onCardDestroy={handleTaskDestroy}
           onCardUpdate={handleTaskUpdate}
           onClose={handleClose}
+          onAttachImage={handleAttachImage}
+          onRemoveImage={handleRemoveImage}
           cardId={openedTaskId}
           mode={mode}
         />
